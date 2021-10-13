@@ -8,9 +8,11 @@
     <title>Yeni Öğrenci Affı (2018 Sonrası)</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
+<div class="bilgi alert alert-danger w-25 border border-danger" style="display: none">Kopyalandı</div>
 
 <div class="container">
     <div class="row">
@@ -19,38 +21,95 @@
 
             <h2 class="mb-4">Örnek Twitler</h2>
 
-            <div class="input-group w-100">
-                <textarea  type="text" class="form-control w-75 text-muted"></textarea>
+            <div class="textareaContainer">
 
-                <button type="button" class="btn btn-primary w-25">
-                    <i class="bi bi-clipboard"></i>
-                    Kopyala
-                </button>
             </div>
+
         </div>
     </div>
 
 </div>
 
-
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.js"></script>
 <script>
     window.addEventListener("load", function () {
         console.log("Page loaded..");
 
+        function htmlToElement(html) {
+            let template = document.createElement('template');
+            html = html.trim(); // Never return a text node of whitespace as the result
+            template.innerHTML = html;
+            return template.content.firstChild;
+        }
+        let buttonHtml = `<button type="button" class="btn btn-primary w-25">
+                    <i class="bi bi-clipboard"></i>
+                    Kopyala
+                </button>`;
+
+        function copyText(copyText) {
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(copyText.value);
+        }
+
         let twits = [
-            "Ailevi nedenlerle yarıda bıraktığımız egitimlerimize dönmek icin #öğrenciaffi na desteklerinizi arz ederiz. #öğrenciaffi  #ogrenciaffi",
+            "Ailevi nedenlerle yarıda bıraktığımız egitimlerimize dönmek icin #öğrenciaffi na desteklerinizi arz ederiz. #öğrenciaffi",
             "COVID-19, maddi imkansızlıklar ve ailevi sebeplerden dolayı eğitimini yarım bırakmak zorunda kalan gençleriz. 700 bin genç ve ailesi için destek bekliyoruz #öğrenciaffı",
-            "Lisans, yüksek lisans, doktora gibi eğitim aşamalarında terör dışı nedenlerle ilişiği kesilen 700bin kişiyiz. Lütfen sesimizi duyun, duyurun. #öğrenciaffı"
+            "Lisans, yüksek lisans, doktora gibi eğitim aşamalarında terör dışı nedenlerle ilişiği kesilen 700bin kişiyiz. Lütfen sesimizi duyun, duyurun. #öğrenciaffı",
+            "Öğrenci affıyla ilgili gelişmeleri bekliyoruz. Bu dönem okulda olmak istiyoruz. 700 bin kişiyiz. Ailelerimizle milyonlarca yürek dua ediyoruz. #ÖğrenciAFistiyor",
+            "800BİN genç ise hayatın yükünü sırtlandığı için eğitim hayatına ara verdi. Lütfen okullarımıza dönüş biletini kesin efendim🙏 #ÖğrenciAFFI",
+            "Bu gençlerin tek suçu, eğitimini düşük yaşam standartları altında tamamlamaya çalışmaktı, olmadı.😔 Lütfen sesimizi Cumhurbaşkanımıza duyurun🙏 #ÖğrenciAFFI",
+            "Halden anlarsa siz anlarsınız, gençlerin elini tutarsa siz tutarsınız🙏 #ÖğrenciAFFI",
+            "Herkes yerinde ve zamanında olması gerekeni yapmışken; bizler boynumuza yüklenen yükün altında ezilip bir yandan da okulumuzu bu güç şartlar altında tamamlamaya çalıştık, OLMADI! #ÖğrenciAFFI ",
+            "Hayat şartlarına direnirken bir yandan da eğitimi tamamlamak için gayret vermek ne demek şahit olmak bile istemezsiniz🙏 #ÖğrenciAFFI ",
+            "Bir türlü öğrenciliğimizi mücbir sebeplerden ötürü tamamlayamadık. Emin olunuz; çocukluğun tadını, öğrencilik hayatını, meslek sahibi olmanın gururunu, yuva kurmayı kimse ötelemek istemez🙏 #ÖğrenciAFFI ",
+            "Bu derde çare lazım, dermanı sizde susmak olmaz! #ÖğrenciAFFI ",
+            "Bizler başarısız öğrenci değiliz; yaşam mücadelesine ansızın yakalanıp, eğitimine ara vermiş gençleriz. #ÖğrenciAFFI ",
+            "800BİN öğrenci AF bekliyor. Sesimiz duyulmuyor🙏 #ÖğrenciAFFI ",
+            "#öğrenciaffı bekleyen öğrencilerin çoğunluğunu; pandemi ve zorlu hayat koşullarında hayatını idame ettiren gençler oluşturuyor.🙏 #ÖğrenciAFFI ",
+            "Keyfiyetten değil; mecburiyetten ara verdiğimiz eğitimlerimizi tamamlamak istiyoruz🙏 #ÖğrenciAFFI ",
+            "Her şey yoluna girdi derken; büyüklerimiz affı çok görmesin🙏 #ÖğrenciAFFI ",
+            "Kaldığımız yerden eğitimimizi tamamlamamıza müsade edin🙏 #ÖğrenciAFFI ",
+            "Mücbir sebeplerden ötürü okulunu öteleyip ve ya bırakmak zorunda kalan gençlere kulak verin🙏 #ÖğrenciAFFI",
+            "Yarım kalan eğitimlerimizi tamamlamak için büyüklerimizin elimizden tutmasını bekliyoruz 🙏 #ÖğrenciAFFI",
+            "#ÖğrenciAFFI için 3 yıldır müjdenizi bekliyoruz. Takatimiz kalmadı🙏",
+            "COVID-19, maddi imkansızlıklar ve ailevi sebeplerden dolayı eğitimini yarım bırakmak zorunda kalan gençleriz. 800 bin genci sevindirecek haberlerinizi bekliyoruz🙏 #ÖğrenciAFFI",
+            "800BİN öğrenci AF bekliyor. Sesimiz duyulmuyor😔 #ÖğrenciAFFI",
+            `Ufak bir hendeği geçemez olduk
+Bir bardak soğuk su içemez olduk
+Elimizden tutacak bir isim bulamaz olduk😔 #ÖğrenciAFFI`,
+            "800BİN gencin geleceğine dokunacak bir el bekliyoruz🙏 #ÖğrenciAFFI",
+            "#öğrenciaffı için gençlerin yanında görmek istiyoruz sizi başkanım🙏",
+            "Gençlerin umudu günden güne tükeniyor. Telafisi olmayan yılların pişmanlığına ortak olmayın lütfen. Bu zor süreçte 800BİN gencin kalbini incitmeyin. İvedi bir şekilde #ÖğrenciAFFI için gerekli çalışmalara ön ayak olun🙏",
+            "Büyüklerimizden istirham ediyoruz; evlatlarınıza sahip çıkın🙏 #öğrenciaffı"
         ];
 
-        let twitsContainer = document.querySelector(".twitsContainer");
-        let inputGroup = document.querySelector(".input-group");
+        let textContainer = document.querySelector('.textareaContainer');
 
         for (let i = 0; i < twits.length; i++) {
-            let clone = inputGroup.cloneNode(true);
-            clone.querySelector('textarea').value = twits[i];
-            twitsContainer.appendChild(clone)
+            // let clone = inputGroup.cloneNode(true);
+            // clone.querySelector('textarea').value = twits[i];
+            // twitsContainer.appendChild(clone);
+
+            let newTwitContainer = document.createElement('div');
+            newTwitContainer.className = "input-group w-100 my-3";
+            let newText = document.createElement('textarea');
+            newText.className = "form-control w-75 text-muted";
+            newText.value = twits[i];
+
+            newTwitContainer.appendChild(newText);
+
+            let buttonElem = htmlToElement(buttonHtml);
+            buttonElem.addEventListener("click", (e)=>{
+                e.preventDefault();
+                copyText(e.target.previousSibling);
+
+                $(".bilgi").fadeIn().fadeOut(1000);
+            });
+            newTwitContainer.appendChild(buttonElem);
+
+            textContainer.appendChild(newTwitContainer);
         }
 
     })
