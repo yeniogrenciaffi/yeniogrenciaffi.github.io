@@ -22,8 +22,10 @@
             <h2 class="mb-4">Örnek Twitler</h2>
             <div class="mb-2">
                 <h3>Hashtagler ne olsun?</h3>
-                <p class="text-primary">Aralarında boşluk bırakarak yazın. Hashtagler metinlerin sonuna otomatik eklenecektir.</p>
-                <strong>Hashtagler:</strong> <input id="hashtagBox" class="form-control d-inline-block" type="text" value="#öğrenciaffı #yeniöğrenciaffı">
+                <p class="text-primary">Aralarında boşluk bırakarak yazın. Hashtagler metinlerin sonuna otomatik
+                    eklenecektir.</p>
+                <strong>Hashtagler:</strong> <input id="hashtagBox" class="form-control d-inline-block" type="text"
+                                                    value="#öğrenciaffı #yeniöğrenciaffı">
             </div>
             <div class="textareaContainer">
 
@@ -54,13 +56,39 @@
         }
 
         function findHashtags(searchText) {
-            return searchText.split(' ').filter( v=> v.startsWith('#') );
+            return searchText.split(' ').filter(v => v.startsWith('#'));
         }
 
         function removeAllChildNodes(parent) {
             while (parent.firstChild) {
                 parent.removeChild(parent.firstChild);
             }
+        }
+
+        function getHashtags() {
+            let hashtags = document.querySelector("#hashtagBox").value;
+            return hashtags;
+        }
+
+        function getHashtagsCS() {
+            let hashTags = findHashtags(getHashtags());
+            var uniq = hashTags
+                .map((name) => {
+                    name = name.replace(/^#+|#+$/g, '');
+                    return {count: 1, name: name}
+                })
+                .reduce((a, b) => {
+                    a[b.name] = (a[b.name] || 0) + b.count;
+                    return a;
+                }, {})
+
+            let sorted = Object.keys(uniq).sort((a, b) => uniq[a] < uniq[b])
+            let hashtagsMerged = "";
+            sorted.forEach(value => {
+                hashtagsMerged = hashtagsMerged + "," + value;
+            })
+            hashtagsMerged = hashtagsMerged.replace(/^,+|,+$/g, '');
+            return hashtagsMerged;
         }
 
         function renderTextAreas(hashtags) {
@@ -70,7 +98,7 @@
                     Kopyala
                 </button>`;
 
-            let shareHtml = `<a href="" class="btn btn-primary ms-2">
+            let shareHtml = `<a class="btn btn-primary ms-2">
                     <i class="bi bi-twitter"></i>
                     Twitle
                 </a>`;
@@ -120,39 +148,30 @@ Elimizden tutacak bir isim bulamaz olduk😔`,
                 let newText = document.createElement('textarea');
                 newText.className = "form-control w-75 text-muted";
                 newText.value = twits[i] + " " + hashtags;
+
+                newText.addEventListener('keyup', (e) => {
+                    let elem = e.target;
+                    let aElem = elem.nextSibling.nextSibling;
+
+                    let textTwit = elem.value;
+                    let textTwitTrimmed = textTwit.replace( /(\#.*)/g, '' ).trim(); console.log(textTwitTrimmed)
+                    aElem.href = 'https://twitter.com/intent/tweet?text=' + textTwitTrimmed + '&hashtags=' + getHashtagsCS();
+                });
+
                 newTwitContainer.appendChild(newText);
 
                 //add copy button
                 let buttonElem = htmlToElement(buttonHtml);
-                buttonElem.addEventListener("click", (e)=>{
+                buttonElem.addEventListener("click", (e) => {
                     e.preventDefault();
                     copyText(e.target.previousSibling);
-                    $(".bilgi").fadeIn().fadeOut(1000);
+                    $(".bilgi").fadeIn().fadeOut(2000);
                 });
                 newTwitContainer.appendChild(buttonElem);
 
                 //add twitter share link
                 let shareElem = htmlToElement(shareHtml);
-                let hashTags = findHashtags(hashtags);
-                var uniq = hashTags
-                    .map((name) => {
-                        name = name.replace( /^#+|#+$/g, '' );
-                        return {count: 1, name: name}
-                    })
-                    .reduce((a, b) => {
-                        a[b.name] = (a[b.name] || 0) + b.count;
-                        return a;
-                    }, {})
-
-                let sorted = Object.keys(uniq).sort((a, b) => uniq[a] < uniq[b])
-                let hashtagsMerged = "";
-                sorted.forEach(value => {
-                    hashtagsMerged = hashtagsMerged + "," + value;
-                })
-                hashtagsMerged = hashtagsMerged.replace( /^,+|,+$/g, '');
-                //console.log(hashtagsMerged)
-
-                shareElem.href = 'https://twitter.com/intent/tweet?text=' + twits[i] + '&hashtags=' + hashtagsMerged;
+                shareElem.href = 'https://twitter.com/intent/tweet?text=' + twits[i] + '&hashtags=' + getHashtagsCS();
                 shareElem.target = '_blank';
                 newTwitContainer.appendChild(shareElem);
 
@@ -160,12 +179,20 @@ Elimizden tutacak bir isim bulamaz olduk😔`,
             }
         }
 
-        let hashtags = document.querySelector("#hashtagBox").value;
-        renderTextAreas(hashtags);
+        renderTextAreas(getHashtags());
 
-        document.querySelector("#hashtagBox").addEventListener('keyup', (e)=>{
+        document.querySelector("#hashtagBox").addEventListener('keyup', (e) => {
             renderTextAreas(e.target.value);
-        })
+        });
+
+        /*document.querySelector("textarea").addEventListener('keyup', (e) => {
+            let elem = e.target;
+            let aElem = elem.nextSibling.nextSibling;
+
+            let textTwit = elem.value;
+            let textTwitTrimmed = textTwit.replace( /(\#.*)/g, '' ).trim(); console.log(textTwitTrimmed)
+            aElem.href = 'https://twitter.com/intent/tweet?text=' + textTwitTrimmed + '&hashtags=' + getHashtagsCS();
+        });*/
     })
 </script>
 </body>
