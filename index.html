@@ -20,7 +20,11 @@
             <h1 class="mb-5">Yeni Öğrenci Affı (2018 Sonrası) Sayfası</h1>
 
             <h2 class="mb-4">Örnek Twitler</h2>
-
+            <div class="mb-2">
+                <h3>Hashtagler ne olsun?</h3>
+                <p class="text-primary">Aralarında boşluk bırakarak yazın. Hashtagler metinlerin sonuna otomatik eklenecektir.</p>
+                <strong>Hashtagler:</strong> <input id="hashtagBox" class="form-control d-inline-block" type="text" value="#öğrenciaffı #yeniöğrenciaffı">
+            </div>
             <div class="textareaContainer">
 
             </div>
@@ -42,10 +46,6 @@
             template.innerHTML = html;
             return template.content.firstChild;
         }
-        let buttonHtml = `<button type="button" class="btn btn-primary w-25">
-                    <i class="bi bi-clipboard"></i>
-                    Kopyala
-                </button>`;
 
         function copyText(copyText) {
             copyText.select();
@@ -53,65 +53,119 @@
             navigator.clipboard.writeText(copyText.value);
         }
 
-        let twits = [
-            "Ailevi nedenlerle yarıda bıraktığımız egitimlerimize dönmek icin #öğrenciaffi na desteklerinizi arz ederiz. #öğrenciaffi",
-            "COVID-19, maddi imkansızlıklar ve ailevi sebeplerden dolayı eğitimini yarım bırakmak zorunda kalan gençleriz. 700 bin genç ve ailesi için destek bekliyoruz #öğrenciaffı",
-            "Lisans, yüksek lisans, doktora gibi eğitim aşamalarında terör dışı nedenlerle ilişiği kesilen 700bin kişiyiz. Lütfen sesimizi duyun, duyurun. #öğrenciaffı",
-            "Öğrenci affıyla ilgili gelişmeleri bekliyoruz. Bu dönem okulda olmak istiyoruz. 700 bin kişiyiz. Ailelerimizle milyonlarca yürek dua ediyoruz. #ÖğrenciAFistiyor",
-            "800BİN genç ise hayatın yükünü sırtlandığı için eğitim hayatına ara verdi. Lütfen okullarımıza dönüş biletini kesin efendim🙏 #ÖğrenciAFFI",
-            "Bu gençlerin tek suçu, eğitimini düşük yaşam standartları altında tamamlamaya çalışmaktı, olmadı.😔 Lütfen sesimizi Cumhurbaşkanımıza duyurun🙏 #ÖğrenciAFFI",
-            "Halden anlarsa siz anlarsınız, gençlerin elini tutarsa siz tutarsınız🙏 #ÖğrenciAFFI",
-            "Herkes yerinde ve zamanında olması gerekeni yapmışken; bizler boynumuza yüklenen yükün altında ezilip bir yandan da okulumuzu bu güç şartlar altında tamamlamaya çalıştık, OLMADI! #ÖğrenciAFFI ",
-            "Hayat şartlarına direnirken bir yandan da eğitimi tamamlamak için gayret vermek ne demek şahit olmak bile istemezsiniz🙏 #ÖğrenciAFFI ",
-            "Bir türlü öğrenciliğimizi mücbir sebeplerden ötürü tamamlayamadık. Emin olunuz; çocukluğun tadını, öğrencilik hayatını, meslek sahibi olmanın gururunu, yuva kurmayı kimse ötelemek istemez🙏 #ÖğrenciAFFI ",
-            "Bu derde çare lazım, dermanı sizde susmak olmaz! #ÖğrenciAFFI ",
-            "Bizler başarısız öğrenci değiliz; yaşam mücadelesine ansızın yakalanıp, eğitimine ara vermiş gençleriz. #ÖğrenciAFFI ",
-            "800BİN öğrenci AF bekliyor. Sesimiz duyulmuyor🙏 #ÖğrenciAFFI ",
-            "#öğrenciaffı bekleyen öğrencilerin çoğunluğunu; pandemi ve zorlu hayat koşullarında hayatını idame ettiren gençler oluşturuyor.🙏 #ÖğrenciAFFI ",
-            "Keyfiyetten değil; mecburiyetten ara verdiğimiz eğitimlerimizi tamamlamak istiyoruz🙏 #ÖğrenciAFFI ",
-            "Her şey yoluna girdi derken; büyüklerimiz affı çok görmesin🙏 #ÖğrenciAFFI ",
-            "Kaldığımız yerden eğitimimizi tamamlamamıza müsade edin🙏 #ÖğrenciAFFI ",
-            "Mücbir sebeplerden ötürü okulunu öteleyip ve ya bırakmak zorunda kalan gençlere kulak verin🙏 #ÖğrenciAFFI",
-            "Yarım kalan eğitimlerimizi tamamlamak için büyüklerimizin elimizden tutmasını bekliyoruz 🙏 #ÖğrenciAFFI",
-            "#ÖğrenciAFFI için 3 yıldır müjdenizi bekliyoruz. Takatimiz kalmadı🙏",
-            "COVID-19, maddi imkansızlıklar ve ailevi sebeplerden dolayı eğitimini yarım bırakmak zorunda kalan gençleriz. 800 bin genci sevindirecek haberlerinizi bekliyoruz🙏 #ÖğrenciAFFI",
-            "800BİN öğrenci AF bekliyor. Sesimiz duyulmuyor😔 #ÖğrenciAFFI",
-            `Ufak bir hendeği geçemez olduk
-Bir bardak soğuk su içemez olduk
-Elimizden tutacak bir isim bulamaz olduk😔 #ÖğrenciAFFI`,
-            "800BİN gencin geleceğine dokunacak bir el bekliyoruz🙏 #ÖğrenciAFFI",
-            "#öğrenciaffı için gençlerin yanında görmek istiyoruz sizi başkanım🙏",
-            "Gençlerin umudu günden güne tükeniyor. Telafisi olmayan yılların pişmanlığına ortak olmayın lütfen. Bu zor süreçte 800BİN gencin kalbini incitmeyin. İvedi bir şekilde #ÖğrenciAFFI için gerekli çalışmalara ön ayak olun🙏",
-            "Büyüklerimizden istirham ediyoruz; evlatlarınıza sahip çıkın🙏 #öğrenciaffı"
-        ];
-
-        let textContainer = document.querySelector('.textareaContainer');
-
-        for (let i = 0; i < twits.length; i++) {
-            // let clone = inputGroup.cloneNode(true);
-            // clone.querySelector('textarea').value = twits[i];
-            // twitsContainer.appendChild(clone);
-
-            let newTwitContainer = document.createElement('div');
-            newTwitContainer.className = "input-group w-100 my-3";
-            let newText = document.createElement('textarea');
-            newText.className = "form-control w-75 text-muted";
-            newText.value = twits[i];
-
-            newTwitContainer.appendChild(newText);
-
-            let buttonElem = htmlToElement(buttonHtml);
-            buttonElem.addEventListener("click", (e)=>{
-                e.preventDefault();
-                copyText(e.target.previousSibling);
-
-                $(".bilgi").fadeIn().fadeOut(1000);
-            });
-            newTwitContainer.appendChild(buttonElem);
-
-            textContainer.appendChild(newTwitContainer);
+        function findHashtags(searchText) {
+            return searchText.split(' ').filter( v=> v.startsWith('#') );
         }
 
+        function removeAllChildNodes(parent) {
+            while (parent.firstChild) {
+                parent.removeChild(parent.firstChild);
+            }
+        }
+
+        function renderTextAreas(hashtags) {
+
+            let buttonHtml = `<button type="button" class="btn btn-dark">
+                    <i class="bi bi-clipboard"></i>
+                    Kopyala
+                </button>`;
+
+            let shareHtml = `<a href="" class="btn btn-primary ms-2">
+                    <i class="bi bi-twitter"></i>
+                    Twitle
+                </a>`;
+
+            let twits = [
+                "Ailevi nedenlerle yarıda bıraktığımız egitimlerimize dönmek icin öğrenci affına desteklerinizi arz ederiz.",
+                "COVID-19, maddi imkansızlıklar ve ailevi sebeplerden dolayı eğitimini yarım bırakmak zorunda kalan gençleriz. 750 bin genç ve ailesi için destek bekliyoruz.",
+                "Lisans, yüksek lisans, doktora gibi eğitim aşamalarında terör dışı nedenlerle ilişiği kesilen 750bin kişiyiz. Lütfen sesimizi duyun, duyurun.",
+                "Öğrenci affıyla ilgili gelişmeleri bekliyoruz. Bu dönem okulda olmak istiyoruz. 700 bin kişiyiz. Ailelerimizle milyonlarca yürek dua ediyoruz.",
+                "750bin genç ise hayatın yükünü sırtlandığı için eğitim hayatına ara verdi. Lütfen okullarımıza dönüş biletini kesin efendim🙏",
+                "Bu gençlerin tek suçu, eğitimini düşük yaşam standartları altında tamamlamaya çalışmaktı, olmadı.😔 Lütfen sesimizi Cumhurbaşkanımıza duyurun🙏",
+                "Halden anlarsa siz anlarsınız, gençlerin elini tutarsa siz tutarsınız🙏",
+                "Herkes yerinde ve zamanında olması gerekeni yapmışken; bizler boynumuza yüklenen yükün altında ezilip bir yandan da okulumuzu bu güç şartlar altında tamamlamaya çalıştık, OLMADI!",
+                "Hayat şartlarına direnirken bir yandan da eğitimi tamamlamak için gayret vermek ne demek şahit olmak bile istemezsiniz🙏",
+                "Bir türlü öğrenciliğimizi mücbir sebeplerden ötürü tamamlayamadık. Emin olunuz; çocukluğun tadını, öğrencilik hayatını, meslek sahibi olmanın gururunu, yuva kurmayı kimse ötelemek istemez🙏",
+                "Bu derde çare lazım, dermanı sizde susmak olmaz!",
+                "Bizler başarısız öğrenci değiliz; yaşam mücadelesine ansızın yakalanıp, eğitimine ara vermiş gençleriz.",
+                "750bin öğrenci AF bekliyor. Sesimiz duyulmuyor🙏",
+                "Öğrenciaffı bekleyen öğrencilerin çoğunluğunu; pandemi ve zorlu hayat koşullarında hayatını idame ettiren gençler oluşturuyor.🙏",
+                "Keyfiyetten değil; mecburiyetten ara verdiğimiz eğitimlerimizi tamamlamak istiyoruz🙏",
+                "Her şey yoluna girdi derken; büyüklerimiz affı çok görmesin🙏",
+                "Kaldığımız yerden eğitimimizi tamamlamamıza müsade edin🙏",
+                "Mücbir sebeplerden ötürü okulunu öteleyip ve ya bırakmak zorunda kalan gençlere kulak verin🙏",
+                "Yarım kalan eğitimlerimizi tamamlamak için büyüklerimizin elimizden tutmasını bekliyoruz 🙏",
+                "ÖğrenciAFFI için 3 yıldır müjdenizi bekliyoruz. Takatimiz kalmadı🙏",
+                "COVID-19, maddi imkansızlıklar ve ailevi sebeplerden dolayı eğitimini yarım bırakmak zorunda kalan gençleriz. 750bin genci sevindirecek haberlerinizi bekliyoruz🙏",
+                "750bin öğrenci AF bekliyor. Sesimiz duyulmuyor😔",
+                `Ufak bir hendeği geçemez olduk
+Bir bardak soğuk su içemez olduk
+Elimizden tutacak bir isim bulamaz olduk😔`,
+                "800BİN gencin geleceğine dokunacak bir el bekliyoruz🙏",
+                "Öğrenciaffı için gençlerin yanında görmek istiyoruz sizi başkanım🙏",
+                "Gençlerin umudu günden güne tükeniyor. Telafisi olmayan yılların pişmanlığına ortak olmayın lütfen. Bu zor süreçte 800BİN gencin kalbini incitmeyin. İvedi bir şekilde için gerekli çalışmalara ön ayak olun🙏",
+                "Büyüklerimizden istirham ediyoruz; evlatlarınıza sahip çıkın🙏"
+            ];
+
+            let textContainer = document.querySelector('.textareaContainer');
+            removeAllChildNodes(textContainer);
+
+            for (let i = 0; i < twits.length; i++) {
+                // let clone = inputGroup.cloneNode(true);
+                // clone.querySelector('textarea').value = twits[i];
+                // twitsContainer.appendChild(clone);
+
+                let newTwitContainer = document.createElement('div');
+                newTwitContainer.className = "input-group w-100 my-3";
+                let newText = document.createElement('textarea');
+                newText.className = "form-control w-75 text-muted";
+                newText.value = twits[i] + " " + hashtags;
+                newTwitContainer.appendChild(newText);
+
+                //add copy button
+                let buttonElem = htmlToElement(buttonHtml);
+                buttonElem.addEventListener("click", (e)=>{
+                    e.preventDefault();
+                    copyText(e.target.previousSibling);
+                    $(".bilgi").fadeIn().fadeOut(1000);
+                });
+                newTwitContainer.appendChild(buttonElem);
+
+                //add twitter share link
+                let shareElem = htmlToElement(shareHtml);
+                let hashTags = findHashtags(hashtags);
+                var uniq = hashTags
+                    .map((name) => {
+                        name = name.replace( /^#+|#+$/g, '' );
+                        return {count: 1, name: name}
+                    })
+                    .reduce((a, b) => {
+                        a[b.name] = (a[b.name] || 0) + b.count;
+                        return a;
+                    }, {})
+
+                let sorted = Object.keys(uniq).sort((a, b) => uniq[a] < uniq[b])
+                let hashtagsMerged = "";
+                sorted.forEach(value => {
+                    hashtagsMerged = hashtagsMerged + "," + value;
+                })
+                hashtagsMerged = hashtagsMerged.replace( /^,+|,+$/g, '');
+                //console.log(hashtagsMerged)
+
+                shareElem.href = 'https://twitter.com/intent/tweet?text=' + twits[i] + '&hashtags=' + hashtagsMerged;
+                shareElem.target = '_blank';
+                newTwitContainer.appendChild(shareElem);
+
+                textContainer.appendChild(newTwitContainer);
+            }
+        }
+
+        let hashtags = document.querySelector("#hashtagBox").value;
+        renderTextAreas(hashtags);
+
+        document.querySelector("#hashtagBox").addEventListener('keyup', (e)=>{
+            renderTextAreas(e.target.value);
+        })
     })
 </script>
 </body>
